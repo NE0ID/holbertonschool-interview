@@ -5,21 +5,17 @@
 def canUnlockAll(boxes):
     unlocked = [boxes[0]]
     keys = []
-    index = 1
 
     for box in boxes:
-        for key in box:
-            if key not in keys:
-                keys.append(key)
-    print(keys)
-    while index is not len(boxes):
+        if box in unlocked:
+            for key in box:
+                if key not in keys:
+                    keys.append(key)
         for key in keys:
-            if index == key:
-                unlocked.append(boxes[index])
-                print(unlocked)
-            else:
-                continue
-        index += 1
+            if boxes[key] in boxes:
+                if boxes[key] not in unlocked:
+                    unlocked.append(boxes[key])
+                    print(keys)
 
     if len(unlocked) == len(boxes):
         return True
