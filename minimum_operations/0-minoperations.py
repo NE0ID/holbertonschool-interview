@@ -18,6 +18,4 @@ def minOperations(n):
             stock = character
         paste += 1
         character += stock
-        if (character > n):
-            return (0)
     return (copyAll + paste)
