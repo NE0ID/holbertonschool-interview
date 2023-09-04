@@ -9,11 +9,11 @@ def minOperations(n):
     character = 1
     stock = 0
 
-    if (n == 0):
+    if (n <= 0):
         return (0)
 
     while (character < n):
-        if ((character * 2) <= n):
+        if ((n % character) == 0):
             copyAll += 1
             stock = character
         paste += 1
