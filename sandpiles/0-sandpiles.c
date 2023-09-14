@@ -9,18 +9,18 @@
  */
 static void print_grid(int grid[3][3])
 {
-    int i, j;
+	int i, j;
 
-    for (i = 0; i < 3; i++)
-    {
-        for (j = 0; j < 3; j++)
-        {
-            if (j)
-                printf(" ");
-            printf("%d", grid[i][j]);
-        }
-        printf("\n");
-    }
+	for (i = 0; i < 3; i++)
+	{
+		for (j = 0; j < 3; j++)
+		{
+			if (j)
+				printf(" ");
+			printf("%d", grid[i][j]);
+		}
+		printf("\n");
+	}
 }
 /**
  * sandpiles_sum - computes the sum of sandpiles
@@ -46,18 +46,16 @@ void sandpiles_sum(int grid1[3][3], int grid2[3][3])
 		}
 		i++;
 	}
-	/*printf("=\n");*/
-	/*print_grid(grid1);*/
 
-       if (is_stable(grid1) == 1)
-       {
-	       while (is_stable(grid1) == 1)
-	       {
-		       topple_grid(grid1);
-		       printf("=\n");
-		       print_grid(grid1);
-	       }
-       }
+	if (is_stable(grid1) == 1)
+	{
+		while (is_stable(grid1) == 1)
+		{
+			printf("=\n");
+			print_grid(grid1);
+			topple_grid(grid1);
+		}
+	}
 }
 
 /**
@@ -85,7 +83,7 @@ int is_stable(int grid[3][3])
 /**
  * topple_grid - topple unstable grids
  *
- * @grid: grid to check
+ * @grid1: grid to check
  *
  * Return: nothing
  */
