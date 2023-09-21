@@ -12,54 +12,50 @@
  */
 int is_palindrome(listint_t **head)
 {
-	if (head == NULL)
-		return (1);
-	if (len_list(*head) == 0)
-		return (1);
-
-	if (comparing_nodes(head) == 0)
-			return (0);
-	return (1);
-}
-
-/**
- * comparing_nodes - compare values of nodes
- *
- * @node: node to check
- *
- * Return: 0 if values are different, 1 if values are the same
- */
-int comparing_nodes(listint_t **head)
-{
+	listint_t **stack;
 	listint_t *node;
 	listint_t *tmp;
-	int i;
-	int *stock = 0;
+	listint_t *current;
+
+	stack = malloc(sizeof(listint_t));
+	if (stack == NULL)
+		exit(EXIT_FAILURE);
 
 	node = malloc(sizeof(listint_t));
+	if (node == NULL)
+		exit(EXIT_FAILURE);
+
 	tmp = malloc(sizeof(listint_t));
 	if (tmp == NULL)
 		exit(EXIT_FAILURE);
 
+	current = malloc(sizeof(listint_t));
+	if (current == NULL)
+		exit(EXIT_FAILURE);
+
+	if (head == NULL)
+		return (1);
+	if (len_list(*head) == 1)
+		return (1);
+
 	node = *head;
 	tmp = middle_ptr(head);
-	i = 0;
 
-	while (i <= middle_len(head))
+	while (node->next != middle_ptr(head))
 	{
-		stock[i] = node->n;
+		push_stack(stack, node);
 		node = node->next;
-		i++;
 	}
 
 	while (tmp->next != NULL)
 	{
-		while (i > 0)
+		if (stack != NULL)
 		{
-			if (stock[i] != tmp->n)
-				return (0);
-			i--;
+			current = pop_stack(stack);
+			printf("%d - %d\n", current->n, tmp->n);
 		}
+		if (current->n != tmp->n)
+			return (0);
 		tmp = tmp->next;
 	}
 	return (1);
@@ -91,7 +87,7 @@ listint_t *middle_ptr(listint_t **head)
 		if (len % 2 != 0)
 		{
 			if ((i == (len + 1) / 2))
-				return (scnd_head);
+				return (scnd_head->next);
 		}
 		if (i == (len / 2))
 			return (scnd_head);
@@ -125,13 +121,73 @@ int len_list(const listint_t *h)
 }
 
 /**
- * middle_len - get middle length of list
+ * push_stack - push a node into a stack
  *
- * @head: list to check
+ * @head: stack to check
+ * @node: node to push
  *
- * Return: the middle length of the list
+ * Return: new stack or NULL on failure
  */
-int middle_len(listint_t **head)
+listint_t *push_stack(listint_t **stack, listint_t *node)
 {
-	return (len_list(middle_ptr(head)));
+	listint_t *tmp;
+
+	tmp = malloc(sizeof(listint_t));
+	if (tmp == NULL)
+		return (NULL);
+
+	if (len_list(*stack) == 0)
+	{
+		*stack = node;
+		return (*stack);
+	}
+	tmp = *stack;
+
+	while (tmp->next != NULL)
+	{
+		if (tmp->next == NULL)
+		{
+			tmp->next->next = node;
+			return (*stack);
+		}
+		tmp = tmp->next;
+	}
+	return (NULL);
+}
+
+/**
+ * pop_stack - pop a node out of a stack
+ *
+ * @stack: stack to check
+ *
+ * Return: address of poped node or NULL on failure
+ */
+listint_t *pop_stack(listint_t **stack)
+{
+	listint_t *tmp;
+	listint_t *current;
+
+	tmp = malloc(sizeof(listint_t));
+	if (tmp == NULL)
+		return (NULL);
+
+	current = malloc(sizeof(listint_t));
+	if (current == NULL)
+		return (NULL);
+
+	if (len_list(*stack) == 0)
+		return (NULL);
+
+	tmp = *stack;
+	while (tmp->next != NULL)
+	{
+		if (tmp->next->next == NULL)
+		{
+			current = tmp->next;
+			tmp->next = NULL;
+			return (current);
+		}
+		tmp = tmp->next;
+	}
+	return (NULL);
 }

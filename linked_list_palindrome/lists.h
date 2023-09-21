@@ -27,6 +27,7 @@ void free_listint(listint_t *head);
 int is_palindrome(listint_t **head);
 int len_list(const listint_t *h);
 listint_t *middle_ptr(listint_t **head);
-int comparing_nodes(listint_t **head);
-int middle_len(listint_t **head);
+listint_t *push_stack(listint_t **stack, listint_t *node);
+listint_t *pop_stack(listint_t **stack);
+
 #endif /* LISTS_H */
