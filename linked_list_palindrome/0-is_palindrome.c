@@ -13,8 +13,8 @@
 int is_palindrome(listint_t **head)
 {
 	int i;
-	int size = middle_len(*head);
-	int arr[size];
+	int size;
+	int *arr;
 	listint_t *node;
 	listint_t *tmp;
 
@@ -25,6 +25,8 @@ int is_palindrome(listint_t **head)
 
 	node = *head;
 	tmp = middle_ptr(head);
+	size = middle_len(*head);
+	arr = malloc(sizeof(int) * size);
 	i = 0;
 
 	while ((node != middle_ptr(head)) && i <= size)
