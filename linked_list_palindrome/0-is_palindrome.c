@@ -12,26 +12,11 @@
  */
 int is_palindrome(listint_t **head)
 {
-	listint_t **stack;
+	int i;
+	int size = middle_len(*head);
+	int arr[size];
 	listint_t *node;
 	listint_t *tmp;
-	listint_t *current;
-
-	stack = malloc(sizeof(listint_t));
-	if (stack == NULL)
-		exit(EXIT_FAILURE);
-
-	node = malloc(sizeof(listint_t));
-	if (node == NULL)
-		exit(EXIT_FAILURE);
-
-	tmp = malloc(sizeof(listint_t));
-	if (tmp == NULL)
-		exit(EXIT_FAILURE);
-
-	current = malloc(sizeof(listint_t));
-	if (current == NULL)
-		exit(EXIT_FAILURE);
 
 	if (head == NULL)
 		return (1);
@@ -40,25 +25,64 @@ int is_palindrome(listint_t **head)
 
 	node = *head;
 	tmp = middle_ptr(head);
+	i = 0;
 
-	while (node->next != middle_ptr(head))
+	while ((node != middle_ptr(head)) && i <= size)
 	{
-		push_stack(stack, node);
+		arr[i] = node->n;
 		node = node->next;
+		i++;
 	}
 
-	while (tmp->next != NULL)
+	while ((tmp) && i >= 0)
 	{
-		if (stack != NULL)
-		{
-			current = pop_stack(stack);
-			printf("%d - %d\n", current->n, tmp->n);
-		}
-		if (current->n != tmp->n)
+		i--;
+		if (arr[i] != tmp->n)
 			return (0);
 		tmp = tmp->next;
 	}
 	return (1);
+}
+
+/**
+ * middle_len - find the pointer of the middle of the list
+ *
+ * @h: head of list to count
+ *
+ * Return: middle length of a list
+ */
+int middle_len(const listint_t *h)
+{
+	int len;
+
+	len = len_list(h);
+
+	if ((len % 2) != 0)
+		len = (len + 1);
+	return (len);
+}
+
+/**
+ * len_list - count size of list
+ *
+ * @h: pointer to head of list
+ *
+ * Return: number of nodes / size of list
+ */
+int len_list(const listint_t *h)
+{
+    const listint_t *current;
+    int n; /* number of nodes */
+
+    current = h;
+    n = 0;
+    while (current != NULL)
+    {
+        current = current->next;
+        n++;
+    }
+
+    return (n);
 }
 
 /**
@@ -93,101 +117,6 @@ listint_t *middle_ptr(listint_t **head)
 			return (scnd_head);
 		scnd_head = scnd_head->next;
 		i++;
-	}
-	return (NULL);
-}
-
-/**
- * len_list - count size of list
- *
- * @h: pointer to head of list
- *
- * Return: number of nodes / size of list
- */
-int len_list(const listint_t *h)
-{
-    const listint_t *current;
-    int n; /* number of nodes */
-
-    current = h;
-    n = 0;
-    while (current != NULL)
-    {
-        current = current->next;
-        n++;
-    }
-
-    return (n);
-}
-
-/**
- * push_stack - push a node into a stack
- *
- * @head: stack to check
- * @node: node to push
- *
- * Return: new stack or NULL on failure
- */
-listint_t *push_stack(listint_t **stack, listint_t *node)
-{
-	listint_t *tmp;
-
-	tmp = malloc(sizeof(listint_t));
-	if (tmp == NULL)
-		return (NULL);
-
-	if (len_list(*stack) == 0)
-	{
-		*stack = node;
-		return (*stack);
-	}
-	tmp = *stack;
-
-	while (tmp->next != NULL)
-	{
-		if (tmp->next == NULL)
-		{
-			tmp->next->next = node;
-			return (*stack);
-		}
-		tmp = tmp->next;
-	}
-	return (NULL);
-}
-
-/**
- * pop_stack - pop a node out of a stack
- *
- * @stack: stack to check
- *
- * Return: address of poped node or NULL on failure
- */
-listint_t *pop_stack(listint_t **stack)
-{
-	listint_t *tmp;
-	listint_t *current;
-
-	tmp = malloc(sizeof(listint_t));
-	if (tmp == NULL)
-		return (NULL);
-
-	current = malloc(sizeof(listint_t));
-	if (current == NULL)
-		return (NULL);
-
-	if (len_list(*stack) == 0)
-		return (NULL);
-
-	tmp = *stack;
-	while (tmp->next != NULL)
-	{
-		if (tmp->next->next == NULL)
-		{
-			current = tmp->next;
-			tmp->next = NULL;
-			return (current);
-		}
-		tmp = tmp->next;
 	}
 	return (NULL);
 }
