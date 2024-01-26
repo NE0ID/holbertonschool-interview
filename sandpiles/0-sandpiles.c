@@ -95,7 +95,7 @@ void topple_grid(int grid1[3][3])
 	{
 		for (j = 0; j < 3; j++)
 		{
-			if ((grid1[i][j] >= 4) &&  (grid1[i + 1][j + 1]))
+			if (grid1[i][j] >= 4)
 			{
 				grid1[i][j] -= 4;
 				if ((i + 1) < 3)
