@@ -73,7 +73,7 @@ int is_stable(int grid[3][3])
 	{
 		for (j = 0; j < 3; j++)
 		{
-			if (grid[i][j] >= 4)
+			if (grid[i][j] > 3)
 				return (1);
 		}
 	}
