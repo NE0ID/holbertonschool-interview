@@ -91,20 +91,24 @@ void topple_grid(int grid1[3][3])
 {
 	int i, j;
 
-	for (i = 0; i <= 3; i++)
+	for (i = 0; i < 3; i++)
 	{
-		for (j = 0; j <= 3; j++)
+		for (j = 0; j < 3; j++)
 		{
 			if (grid1[i][j] >= 4)
 			{
-				grid1[i][j] -= 4;
+				/*grid1[i][j] -= 4;*/
 				if ((i + 1) < 3)
+					grid[i][j] -= 1;
 					grid1[i + 1][j] += 1;
 				if ((i - 1) >= 0)
+					grid[i][j] -= 1;
 					grid1[i - 1][j] += 1;
 				if ((j + 1) < 3)
+					grid[i][j] -= 1;
 					grid1[i][j + 1] += 1;
 				if ((j - 1) >= 0)
+					grid[i][j] -= 1;
 					grid1[i][j - 1] += 1;
 			}
 		}
